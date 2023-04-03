@@ -1,3 +1,6 @@
+""" I made this program during my CS50 challenge. My main goal is to find every possible word in diferent languages using the same input.
+For example, the word 'coral' in english, with the same letters we can write the word 'claro','colar' & 'locar' in portuguese."""
+
 import itertools
 import os
 
