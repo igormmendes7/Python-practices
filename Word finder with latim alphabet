@@ -1,0 +1,81 @@
+import itertools
+import os
+
+
+def get_word_list(language):
+    """
+    Function that reads a list of words for one of the languages, based on a local file
+    """
+    file_name = language.upper() + ".TXT"
+    file_encoding = "ISO-8859-1"
+    try:
+        with open(file_name, "r", encoding=file_encoding) as f:
+            word_list = f.read().splitlines()
+        return word_list
+    except FileNotFoundError:
+        print(f"Error: {file_name} not found.")
+        return []
+    except UnicodeDecodeError:
+        # try utf-8 decoding as fallback
+        file_encoding = "utf-8"
+        try:
+            with open(file_name, "r", encoding=file_encoding) as f:
+                word_list = f.read().splitlines()
+            return word_list
+        except UnicodeDecodeError:
+            print(f"Error: Unable to read {file_name} with {file_encoding} encoding.")
+            return []
+        except FileNotFoundError:
+            print(f"Error: {file_name} not found.")
+            return []
+
+def get_possible_words(word):
+    """
+    Get in to all possible words
+    """
+    # Create a list with the letters of the word and defines all possibilites
+    word_letters = list(word.lower())
+    possible_words = set()
+    for combination in itertools.permutations(word_letters, len(word)):
+        possible_words.add("".join(combination))
+    return possible_words
+
+
+def find_words_in_language(word, language):
+    """
+    Helper function to find all possible words in a particular language
+    """
+    # Get the word list of the selected language
+    word_list = get_word_list(language)
+    possible_words = get_possible_words(word)
+    found_words = set()
+    for possible_word in possible_words:
+        if possible_word in word_list:
+            found_words.add(possible_word)
+    return found_words
+
+
+def main():
+    # Request user input with any words or random letters
+    word = input("Digite uma palavra: ").lower().strip()
+    english_words = find_words_in_language(word, "english")
+    spanish_words = find_words_in_language(word, "spanish")
+    french_words = find_words_in_language(word, "french")
+    portuguese_words = find_words_in_language(word, "portuguese")
+    italian_words = find_words_in_language(word, "italian")
+
+    # Print every possible word finded
+    for english in english_words:
+        print("Possible English word:", english)
+    for spanish in spanish_words:
+        print("Possible Spanish word:", spanish)
+    for french in french_words:
+        print("Possible French word: ", french)
+    for portuguese in portuguese_words:
+        print("Possible Portuguese word: ", portuguese)
+    for italian in italian_words:
+        print("Possible Italian word: ", italian)
+
+
+if __name__ == '__main__':
+    main()
