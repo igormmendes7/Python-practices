@@ -5,10 +5,8 @@ import itertools
 import os
 
 
-def get_word_list(language):
-    """
-    Function that reads a list of words for one of the languages, based on a local file
-    """
+def get_word_list(language)
+    #Function that reads a list of words for one of the languages, based on a local file
     file_name = language.upper() + ".TXT"
     file_encoding = "ISO-8859-1"
     try:
@@ -33,9 +31,6 @@ def get_word_list(language):
             return []
 
 def get_possible_words(word):
-    """
-    Get in to all possible words
-    """
     # Create a list with the letters of the word and defines all possibilites
     word_letters = list(word.lower())
     possible_words = set()
@@ -45,9 +40,6 @@ def get_possible_words(word):
 
 
 def find_words_in_language(word, language):
-    """
-    Helper function to find all possible words in a particular language
-    """
     # Get the word list of the selected language
     word_list = get_word_list(language)
     possible_words = get_possible_words(word)
